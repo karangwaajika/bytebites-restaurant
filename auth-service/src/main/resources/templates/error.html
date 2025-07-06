@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Error</title>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h1>An Error Occurred</h1>
+    <p>We're sorry, but something went wrong.</p>
+    <p>
+        <strong>Error Details:</strong>
+        <span th:text="${errorMessage}">Error details will appear here.</span>
+    </p>
+    <a href="/login" class="btn btn-primary">Back to Login</a>
+</div>
+</body>
+</html>
