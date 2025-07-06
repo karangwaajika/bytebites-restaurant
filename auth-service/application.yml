@@ -22,25 +22,10 @@ logging:
    level:
       org.springframework.security: DEBUG
       org.springframework.security.oauth2: TRACE   # shows user‑info JSON, exceptions
-      com.lab.securing_project_tracker: DEBUG
+      com.lab.auth_service: DEBUG
 
 mvc:
   throw-exception-if-no-handler-found: true   # raise 404 instead of forward
 web:
   resources:
     add-mappings: false
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics,prometheus
-  endpoint:
-    metrics:
-      enabled: true
-    prometheus:
-      enabled: true
-  metrics:
-    export:
-      prometheus:
-        enabled: true
