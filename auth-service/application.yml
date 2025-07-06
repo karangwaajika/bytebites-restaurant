@@ -1,0 +1,46 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: ${GITHUB_CLIENT_ID}
+            clientSecret: ${GITHUB_CLIENT_SECRET_ID}
+            scope:
+              - read:user
+              - user:email
+
+          google:
+            clientId: ${GOOGLE_CLIENT_ID}
+            clientSecret: ${GOOGLE_CLIENT_SECRET_ID}
+            scope:
+              - openid
+              - profile
+              - email
+
+logging:
+   level:
+      org.springframework.security: DEBUG
+      org.springframework.security.oauth2: TRACE   # shows user‑info JSON, exceptions
+      com.lab.securing_project_tracker: DEBUG
+
+mvc:
+  throw-exception-if-no-handler-found: true   # raise 404 instead of forward
+web:
+  resources:
+    add-mappings: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
