@@ -12,7 +12,9 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
@@ -63,6 +65,7 @@ public class BrowserController {
     @Operation(summary = "Log in using oauth2",
             description = "Upon successful credentials, user is authenticated " +
                     "and a new token is generated")
+    @ResponseBody
     public Map<String,String> success(@RequestParam String token) {
         return Map.of("token", token);
     }
