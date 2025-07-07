@@ -55,7 +55,7 @@ public class ApplicationSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/register", "/api/auth/login",
                                 "api/projects/**","api/tasks/**","/api/logs/view","/api/users/view" ).permitAll()
-                        .requestMatchers("/api/users/me").hasRole("CONTRACTOR")
+//                        .requestMatchers("/api/users/me").hasRole("CONTRACTOR")
                         .requestMatchers("/api/admin/users").hasRole("ADMIN")
                         .requestMatchers("/api/users/view").hasRole("ADMIN")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
