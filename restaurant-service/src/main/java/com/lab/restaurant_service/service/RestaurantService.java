@@ -6,10 +6,14 @@ import com.lab.restaurant_service.model.RestaurantEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
 public interface RestaurantService {
-    RestaurantResponseDto create(RestaurantRequestDto userDto);
+    RestaurantResponseDto create(RestaurantRequestDto restaurantRequestDto);
     Optional<RestaurantEntity> findByName(String name);
+    Optional<RestaurantEntity> findById(Long id);
     Page<RestaurantResponseDto> findAll(Pageable pageable);
+    RestaurantResponseDto partialUpdate(RestaurantRequestDto restaurantRequestDto, Long restaurantId);
+    void deleteById(Long id);
 }

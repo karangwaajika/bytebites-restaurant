@@ -7,8 +7,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.AccessDeniedException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/restaurants")
@@ -41,4 +45,27 @@ public class RestaurantController {
         return this.restaurantService.findAll(pageable);
     }
 
+    @DeleteMapping(name = "delete_restaurant", path = "/delete")
+    @Operation(summary = "Delete Restaurant",
+            description = "The restaurant is delete using its id that is retrieved " +
+                          "as a query parameter from the url")
+    public ResponseEntity<?> deleteRestaurant(@RequestParam Long id){
+        this.restaurantService.deleteById(id);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(Map.of("message", "Restaurant deleted successfully"));
+    }
+
+    @PatchMapping(name = "update_restaurant", path = "/update")
+    @Operation(summary = "Update Restaurant",
+            description = "The restaurant can be updated partially, " +
+                          "it's doesn't necessary required " +
+                          "all the fields to be updated")
+    public ResponseEntity<RestaurantResponseDto> updateRestaurant(@RequestBody RestaurantRequestDto restaurantDto,
+                                                      @RequestParam Long restaurantId){
+
+        RestaurantResponseDto updatedRestaurant = this.restaurantService.partialUpdate(restaurantDto, restaurantId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updatedRestaurant);
+    }
 }
