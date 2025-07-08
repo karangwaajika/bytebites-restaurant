@@ -12,5 +12,6 @@ public interface UserService {
     UserResponseDto create(UserRegisterDto userDto);
     Optional<UserEntity> findByEmail(String email);
     Page<UserResponseDto> findAll(Pageable pageable);
+    Optional<UserEntity> findById(Long userId);
 
 }

@@ -55,4 +55,9 @@ public class UserServiceImpl implements UserService {
         Page<UserEntity> users = this.userRepository.findAll(pageable);
         return users.map(user->this.modelMapper.map(user, UserResponseDto.class));
     }
+
+    @Override
+    public Optional<UserEntity> findById(Long userId) {
+        return this.userRepository.findById(userId);
+    }
 }
