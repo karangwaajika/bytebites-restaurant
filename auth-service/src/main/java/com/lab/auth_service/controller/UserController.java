@@ -1,6 +1,7 @@
 package com.lab.auth_service.controller;
 
 import com.lab.auth_service.dto.UserResponseDto;
+import com.lab.auth_service.exception.UserNotFoundException;
 import com.lab.auth_service.model.UserEntity;
 import com.lab.auth_service.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,11 +9,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api")
@@ -50,6 +55,16 @@ public class UserController {
     public ResponseEntity<UserResponseDto> viewCurrentUser(Authentication auth){
         UserEntity user = this.userService.findByEmail(auth.getName()).get();
         return ResponseEntity.ok(modelMapper.map(user, UserResponseDto.class));
+    }
+
+//    for internal communication between services
+    @GetMapping(name = "find_user_by_id", path = "users/view/{id}")
+    @Operation(summary = "Find User",
+            description = "Search and view only one user using user ID")
+    public UserResponseDto viewTask(@PathVariable Long id){
+        Optional<UserEntity> task = this.userService.findById(id);
+
+        return task.map(userEntity -> this.modelMapper.map(userEntity, UserResponseDto.class)).orElse(null);
     }
 
 }

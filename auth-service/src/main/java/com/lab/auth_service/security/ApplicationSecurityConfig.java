@@ -53,8 +53,9 @@ public class ApplicationSecurityConfig {
                 .sessionManagement(sm -> sm
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register", "/api/auth/login",
-                                "api/projects/**","api/tasks/**","/api/logs/view","/api/users/view" ).permitAll()
+                        .requestMatchers("/api/auth/register", "/api/auth/login","/api/users/view/*",
+                                "api/projects/**","api/tasks/**","/api/logs/view","/api/users/view",
+                                "/api/restaurants/**").permitAll()
 //                        .requestMatchers("/api/users/me").hasRole("CONTRACTOR")
                         .requestMatchers("/api/admin/users").hasRole("ADMIN")
                         .requestMatchers("/api/users/view").hasRole("ADMIN")

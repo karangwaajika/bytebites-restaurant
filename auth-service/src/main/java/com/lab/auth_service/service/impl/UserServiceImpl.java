@@ -2,6 +2,7 @@ package com.lab.auth_service.service.impl;
 
 import com.lab.auth_service.dto.UserRegisterDto;
 import com.lab.auth_service.dto.UserResponseDto;
+import com.lab.auth_service.exception.UserExistsException;
 import com.lab.auth_service.model.UserEntity;
 import com.lab.auth_service.repository.UserRepository;
 import com.lab.auth_service.service.UserService;
@@ -30,6 +31,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto create(UserRegisterDto userDto) {
+        if(findByEmail(userDto.getEmail()).isPresent()){
+            throw new UserExistsException(
+                    String.format("A user with the email '%s' already exist",
+                            userDto.getEmail()));
+        }
         // hash the password
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
@@ -48,5 +54,10 @@ public class UserServiceImpl implements UserService {
     public Page<UserResponseDto> findAll(Pageable pageable) {
         Page<UserEntity> users = this.userRepository.findAll(pageable);
         return users.map(user->this.modelMapper.map(user, UserResponseDto.class));
+    }
+
+    @Override
+    public Optional<UserEntity> findById(Long userId) {
+        return this.userRepository.findById(userId);
     }
 }
