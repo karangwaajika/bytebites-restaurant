@@ -31,6 +31,18 @@ public class GlobalException {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(MenuExistsException.class)
+    public ResponseEntity<?> handleUserExists
+            (MenuExistsException exception, WebRequest webRequest) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("code", HttpStatus.CONFLICT.value());
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", exception.getMessage());
+        body.put("path", webRequest.getContextPath());
+        body.put("sessionId", webRequest.getSessionId());
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> handleUserNotFound(
@@ -47,6 +59,18 @@ public class GlobalException {
     @ExceptionHandler(RestaurantNotFoundException.class)
     public ResponseEntity<?> handleUserNotFound(
             RestaurantNotFoundException exception, WebRequest webRequest) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("code", HttpStatus.NOT_FOUND.value());
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", exception.getMessage());
+        body.put("path", webRequest.getContextPath());
+        body.put("sessionId", webRequest.getSessionId());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MenuNotFoundException.class)
+    public ResponseEntity<?> handleUserNotFound(
+            MenuNotFoundException exception, WebRequest webRequest) {
         Map<String, Object> body = new HashMap<>();
         body.put("code", HttpStatus.NOT_FOUND.value());
         body.put("timestamp", LocalDateTime.now());
