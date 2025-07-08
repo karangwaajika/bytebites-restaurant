@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class RestaurantRequestDto {
-    Long id;
     String name;
     String type;
     String location;

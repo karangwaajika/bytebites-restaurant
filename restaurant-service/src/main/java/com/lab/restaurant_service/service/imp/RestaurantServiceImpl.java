@@ -24,16 +24,17 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public RestaurantResponseDto create(RestaurantRequestDto userDto) {
-        if(findByName(userDto.getName()).isPresent()){
+    public RestaurantResponseDto create(RestaurantRequestDto restaurantDto) {
+        if(findByName(restaurantDto.getName()).isPresent()){
             throw new RestaurantExistsException(
                     String.format("A restaurant with the email '%s' already exist",
-                            userDto.getName()));
+                            restaurantDto.getName()));
         }
-        RestaurantEntity user = this.modelMapper.map(userDto, RestaurantEntity.class);
-        RestaurantEntity savedUser = this.restaurantRepository.save(user);
+        RestaurantEntity restaurant = this.modelMapper.map(restaurantDto, RestaurantEntity.class);
+        restaurant.setId(null);
+        RestaurantEntity savedRestaurant = this.restaurantRepository.save(restaurant);
 
-        return this.modelMapper.map(savedUser, RestaurantResponseDto.class);
+        return this.modelMapper.map(savedRestaurant, RestaurantResponseDto.class);
     }
 
     @Override

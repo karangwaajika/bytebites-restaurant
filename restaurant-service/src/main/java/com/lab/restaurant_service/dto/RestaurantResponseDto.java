@@ -14,5 +14,5 @@ public class RestaurantResponseDto {
     String name;
     String type;
     String location;
-    String ownerEmail;
+    String ownerId;
 }
