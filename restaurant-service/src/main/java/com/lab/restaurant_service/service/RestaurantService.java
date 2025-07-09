@@ -10,7 +10,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
 public interface RestaurantService {
-    RestaurantResponseDto create(RestaurantRequestDto restaurantRequestDto);
+    RestaurantResponseDto create(RestaurantRequestDto restaurantRequestDto) throws Exception;
     Optional<RestaurantEntity> findByName(String name);
     Optional<RestaurantEntity> findById(Long id);
     Page<RestaurantResponseDto> findAll(Pageable pageable);

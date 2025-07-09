@@ -32,7 +32,7 @@ public class RestaurantController {
                           "the inserted restaurant ")
     public ResponseEntity<RestaurantResponseDto> addRestaurant(
             @RequestBody RestaurantRequestDto restaurantRequestDto
-    ) {
+    ) throws Exception {
         RestaurantResponseDto savedUser = this.restaurantService.create(restaurantRequestDto);
         return ResponseEntity.ok(savedUser);
     }

@@ -2,13 +2,16 @@ package com.lab.restaurant_service.service.imp;
 
 import com.lab.restaurant_service.dto.RestaurantRequestDto;
 import com.lab.restaurant_service.dto.RestaurantResponseDto;
+import com.lab.restaurant_service.dto.UserResponseDto;
 import com.lab.restaurant_service.exception.RestaurantExistsException;
 import com.lab.restaurant_service.exception.RestaurantNotFoundException;
+import com.lab.restaurant_service.exception.UnauthorizedException;
 import com.lab.restaurant_service.exception.UserNotFoundException;
 import com.lab.restaurant_service.model.RestaurantEntity;
 import com.lab.restaurant_service.repository.RestaurantRepository;
 import com.lab.restaurant_service.service.AuthServiceUser;
 import com.lab.restaurant_service.service.RestaurantService;
+import com.lab.restaurant_service.util.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +33,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public RestaurantResponseDto create(RestaurantRequestDto restaurantDto) {
+    public RestaurantResponseDto create(RestaurantRequestDto restaurantDto) throws Exception {
         if(findByName(restaurantDto.getName()).isPresent()){
             throw new RestaurantExistsException(
                     String.format("A restaurant with the name '%s' already exist",
@@ -39,7 +42,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         if (!authServiceUser.isUserExists(restaurantDto.getOwnerId())) {
             throw new UserNotFoundException(
-                    String.format("Restaurant owner with id '%s' doesn't exist", restaurantDto.getOwnerId()));
+                    String.format("Restaurant owner with id '%s' doesn't exist",
+                            restaurantDto.getOwnerId()));
+        }
+
+        // check whether the user is a restaurant owner
+        UserResponseDto user = authServiceUser.findUserById(restaurantDto.getOwnerId());
+        if( user.getRole() != Role.RESTAURANT_OWNER){
+            throw new UnauthorizedException(
+                    String.format("User provide with id '%s' is not a restaurant owner",
+                            restaurantDto.getOwnerId()));
         }
 
         RestaurantEntity restaurant = this.modelMapper.map(restaurantDto, RestaurantEntity.class);
