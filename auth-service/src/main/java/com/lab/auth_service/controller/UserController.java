@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api-auth-service")
 @Tag(name = "User Controller", description = "Manage all the User's urls")
 public class UserController {
     UserService userService;

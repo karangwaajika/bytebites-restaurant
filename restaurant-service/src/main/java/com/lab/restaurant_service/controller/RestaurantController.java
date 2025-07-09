@@ -15,7 +15,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/restaurants")
+@RequestMapping("api-restaurant-service")
 public class RestaurantController {
     ModelMapper modelMapper;
     RestaurantService restaurantService;
@@ -30,9 +30,9 @@ public class RestaurantController {
     @Operation(summary = "Add restaurant",
             description = "This request inserts a restaurant to the database and returns " +
                           "the inserted restaurant ")
-    public ResponseEntity<RestaurantResponseDto> registerUser(
+    public ResponseEntity<RestaurantResponseDto> addRestaurant(
             @RequestBody RestaurantRequestDto restaurantRequestDto
-    ) {
+    ) throws Exception {
         RestaurantResponseDto savedUser = this.restaurantService.create(restaurantRequestDto);
         return ResponseEntity.ok(savedUser);
     }
