@@ -4,9 +4,13 @@ import com.lab.restaurant_service.dto.MenuRequestDto;
 import com.lab.restaurant_service.dto.MenuResponseDto;
 import com.lab.restaurant_service.exception.MenuExistsException;
 import com.lab.restaurant_service.exception.MenuNotFoundException;
+import com.lab.restaurant_service.exception.RestaurantExistsException;
+import com.lab.restaurant_service.exception.RestaurantNotFoundException;
 import com.lab.restaurant_service.model.MenuEntity;
 import com.lab.restaurant_service.repository.MenuRepository;
+import com.lab.restaurant_service.repository.RestaurantRepository;
 import com.lab.restaurant_service.service.MenuService;
+import com.lab.restaurant_service.service.RestaurantService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,15 +23,24 @@ import java.util.Optional;
 public class MenuServiceImpl implements MenuService {
     ModelMapper modelMapper;
     MenuRepository menuRepository;
+    RestaurantRepository restaurantRepository;
 
     public MenuServiceImpl(ModelMapper modelMapper,
-                           MenuRepository menuRepository) {
+                           MenuRepository menuRepository,
+                           RestaurantRepository restaurantRepository) {
         this.modelMapper = modelMapper;
         this.menuRepository = menuRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     @Override
     public MenuResponseDto create(MenuRequestDto menuDto) {
+        if(this.restaurantRepository.findById(menuDto.getRestaurantId()).isEmpty()){
+            throw new RestaurantNotFoundException(
+                    String.format("A restaurant with the id '%s' doesn't exist",
+                            menuDto.getRestaurantId()));
+        }
+
         if(findByName(menuDto.getName()).isPresent()){
             throw new MenuExistsException(
                     String.format("A menu with the name '%s' already exist",
