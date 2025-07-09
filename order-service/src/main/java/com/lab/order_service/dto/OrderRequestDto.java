@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MenuResponseDto {
+public class OrderRequestDto {
     private Long customerId;
     private Long menuId;
     private int qty;
-    private MenuDto menu;
 }
