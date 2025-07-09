@@ -96,9 +96,26 @@ public class ApplicationSecurityConfig {
         return httpSecurity.build();
     }
 
-    //  WEB / OAUTH2 CHAIN
+    //  for order-service
     @Bean
     @Order(3)
+    public SecurityFilterChain orderSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .securityMatcher("/api-order-service/**")
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sm -> sm
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api-order-service/**").permitAll()
+                        .anyRequest().authenticated()
+                );
+
+        return httpSecurity.build();
+    }
+
+    //  WEB / OAUTH2 CHAIN
+    @Bean
+    @Order(4)
     public SecurityFilterChain webChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(auth -> auth
