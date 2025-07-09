@@ -20,7 +20,7 @@ public class OrderEntity {
     private Long id;
 
     @Column(name = "customer_id", nullable = false)
-    private Long ownerId;
+    private Long customerId;
 
     @Column(name = "menu_id", nullable = false)
     private Long menuId;
