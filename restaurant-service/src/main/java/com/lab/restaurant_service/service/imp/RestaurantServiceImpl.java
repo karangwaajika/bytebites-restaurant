@@ -28,7 +28,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public RestaurantResponseDto create(RestaurantRequestDto restaurantDto) {
         if(findByName(restaurantDto.getName()).isPresent()){
             throw new RestaurantExistsException(
-                    String.format("A restaurant with the email '%s' already exist",
+                    String.format("A restaurant with the name '%s' already exist",
                             restaurantDto.getName()));
         }
         RestaurantEntity restaurant = this.modelMapper.map(restaurantDto, RestaurantEntity.class);

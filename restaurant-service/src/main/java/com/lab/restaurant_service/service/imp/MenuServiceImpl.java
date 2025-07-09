@@ -30,7 +30,7 @@ public class MenuServiceImpl implements MenuService {
     public MenuResponseDto create(MenuRequestDto menuDto) {
         if(findByName(menuDto.getName()).isPresent()){
             throw new MenuExistsException(
-                    String.format("A menu with the email '%s' already exist",
+                    String.format("A menu with the name '%s' already exist",
                             menuDto.getName()));
         }
         MenuEntity menu = this.modelMapper.map(menuDto, MenuEntity.class);
