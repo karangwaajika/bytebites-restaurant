@@ -4,8 +4,10 @@ import com.lab.restaurant_service.dto.RestaurantRequestDto;
 import com.lab.restaurant_service.dto.RestaurantResponseDto;
 import com.lab.restaurant_service.exception.RestaurantExistsException;
 import com.lab.restaurant_service.exception.RestaurantNotFoundException;
+import com.lab.restaurant_service.exception.UserNotFoundException;
 import com.lab.restaurant_service.model.RestaurantEntity;
 import com.lab.restaurant_service.repository.RestaurantRepository;
+import com.lab.restaurant_service.service.AuthServiceUser;
 import com.lab.restaurant_service.service.RestaurantService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -17,11 +19,14 @@ import java.util.Optional;
 public class RestaurantServiceImpl implements RestaurantService {
     ModelMapper modelMapper;
     RestaurantRepository restaurantRepository;
+    AuthServiceUser authServiceUser;
 
     public RestaurantServiceImpl(ModelMapper modelMapper,
-                                 RestaurantRepository restaurantRepository) {
+                                 RestaurantRepository restaurantRepository,
+                                 AuthServiceUser authServiceUser) {
         this.modelMapper = modelMapper;
         this.restaurantRepository = restaurantRepository;
+        this.authServiceUser = authServiceUser;
     }
 
     @Override
@@ -31,6 +36,12 @@ public class RestaurantServiceImpl implements RestaurantService {
                     String.format("A restaurant with the name '%s' already exist",
                             restaurantDto.getName()));
         }
+
+        if (!authServiceUser.isUserExists(restaurantDto.getOwnerId())) {
+            throw new UserNotFoundException(
+                    String.format("Restaurant owner with id '%s' doesn't exist", restaurantDto.getOwnerId()));
+        }
+
         RestaurantEntity restaurant = this.modelMapper.map(restaurantDto, RestaurantEntity.class);
         restaurant.setId(null);
         RestaurantEntity savedRestaurant = this.restaurantRepository.save(restaurant);
