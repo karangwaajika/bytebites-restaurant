@@ -15,7 +15,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/restaurants")
+@RequestMapping("api-restaurant-service")
 public class RestaurantController {
     ModelMapper modelMapper;
     RestaurantService restaurantService;
