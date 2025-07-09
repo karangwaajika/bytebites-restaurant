@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api-restaurant-service")
+@RequestMapping("api-menu-service")
 public class MenuController {
     ModelMapper modelMapper;
     MenuService menuService;
@@ -25,7 +25,7 @@ public class MenuController {
         this.menuService = menuService;
     }
 
-    @PostMapping("/menu/add")
+    @PostMapping("/add")
     @Operation(summary = "Add menu",
             description = "This request inserts a menu to the database and returns " +
                           "the inserted menu ")
@@ -36,7 +36,7 @@ public class MenuController {
         return ResponseEntity.ok(savedUser);
     }
 
-    @GetMapping(name = "view_menus", path = "/menu/view")
+    @GetMapping(name = "view_menus", path = "/view")
     @Operation(summary = "View menus",
             description = "This method applies pagination for efficient retrieval " +
                           "of menus list")
@@ -44,7 +44,7 @@ public class MenuController {
         return this.menuService.findAll(pageable);
     }
 
-    @DeleteMapping(name = "delete_menu", path = "/menu/delete")
+    @DeleteMapping(name = "delete_menu", path = "/delete")
     @Operation(summary = "Delete Menu",
             description = "The menu is delete using its id that is retrieved " +
                           "as a query parameter from the url")
@@ -55,7 +55,7 @@ public class MenuController {
                 .body(Map.of("message", "Menu deleted successfully"));
     }
 
-    @PatchMapping(name = "update_menu", path = "/menu/update")
+    @PatchMapping(name = "update_menu", path = "/update")
     @Operation(summary = "Update Menu",
             description = "The menu can be updated partially, " +
                           "it's doesn't necessary required " +
