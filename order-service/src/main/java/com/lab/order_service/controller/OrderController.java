@@ -25,7 +25,7 @@ public class OrderController {
                           "the inserted order ")
     public ResponseEntity<OrderResponseDto> registerUser(
             @RequestBody OrderRequestDto orderRequestDto
-    ) {
+    ) throws Exception {
         OrderResponseDto savedUser = this.orderService.order(orderRequestDto);
         return ResponseEntity.ok(savedUser);
     }

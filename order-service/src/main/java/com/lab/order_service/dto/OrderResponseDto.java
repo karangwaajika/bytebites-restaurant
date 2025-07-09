@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class OrderResponseDto {
-    private Long customerId;
-    private Long menuId;
+    private Long id;
     private int qty;
     private MenuDto menu;
 }
