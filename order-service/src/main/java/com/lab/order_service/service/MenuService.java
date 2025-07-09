@@ -12,14 +12,14 @@ public class MenuService {
     private final String authServiceUrl;
 
     public MenuService(RestTemplate restTemplate,
-                       @Value("${auth.service.url:http://localhost:8080/api-auth-service}") String authServiceUrl) {
+                       @Value("${auth.service.url:http://localhost:8080/api-menu-service}") String authServiceUrl) {
         this.restTemplate = restTemplate;
         this.authServiceUrl = authServiceUrl;
     }
 
     public MenuDto findMenuById(Long menuId) throws Exception {
         try {
-            String url = authServiceUrl + "/menu/view/" + menuId;
+            String url = authServiceUrl + "/view/" + menuId;
             ResponseEntity<MenuDto> response = restTemplate.getForEntity(url, MenuDto.class);
             return response.getBody();
         } catch (Exception e) {

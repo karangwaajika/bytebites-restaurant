@@ -1,5 +1,6 @@
 package com.lab.restaurant_service.controller;
 
+import com.lab.restaurant_service.dto.MenuDto;
 import com.lab.restaurant_service.dto.MenuRequestDto;
 import com.lab.restaurant_service.dto.MenuResponseDto;
 import com.lab.restaurant_service.service.MenuService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api-menu-service")
@@ -66,5 +68,14 @@ public class MenuController {
         MenuResponseDto updatedMenu = this.menuService.partialUpdate(menuDto, menuId);
 
         return ResponseEntity.status(HttpStatus.OK).body(updatedMenu);
+    }
+
+    //    for internal communication between services
+    @GetMapping(name = "find_menu_by_id", path = "/view/{id}")
+    @Operation(summary = "Find Menu",
+            description = "Search and view only one menu using menu ID")
+    public MenuDto viewMenu(@PathVariable Long id){
+
+        return this.modelMapper.map(this.menuService.findById(id), MenuDto.class);
     }
 }
