@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lab</groupId>
-	<artifactId>restaurant-service</artifactId>
+	<artifactId>order-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>restaurant-service</name>
-	<description>Manage restaurant and menu operations</description>
+	<name>order-service</name>
+	<description>Manage order placed by the customer</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -54,12 +54,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		security-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
 
 		<!-- Lombok -->
 		<dependency>
