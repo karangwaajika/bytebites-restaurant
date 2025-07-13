@@ -41,7 +41,7 @@ public class RestaurantController {
     }
 
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(name = "view_restaurants", path = "/view")
     @Operation(summary = "View restaurants",
             description = "This method applies pagination for efficient retrieval " +

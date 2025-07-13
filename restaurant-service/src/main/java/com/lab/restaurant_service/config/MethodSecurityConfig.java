@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 @Configuration
-@EnableMethodSecurity // enables @PreAuthorize, @PostAuthorize, etc.
+@EnableMethodSecurity
 public class MethodSecurityConfig {
-    // no code needed here, just the annotation
+    // Nothing else needed for basic use
 }
