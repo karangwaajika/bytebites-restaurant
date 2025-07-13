@@ -10,13 +10,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api-menu-service")
+@RequestMapping("menu")
 public class MenuController {
     ModelMapper modelMapper;
     MenuService menuService;
@@ -27,6 +28,7 @@ public class MenuController {
         this.menuService = menuService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @PostMapping("/add")
     @Operation(summary = "Add menu",
             description = "This request inserts a menu to the database and returns " +
@@ -38,6 +40,7 @@ public class MenuController {
         return ResponseEntity.ok(savedUser);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @GetMapping(name = "view_menus", path = "/view")
     @Operation(summary = "View menus",
             description = "This method applies pagination for efficient retrieval " +
@@ -46,6 +49,7 @@ public class MenuController {
         return this.menuService.findAll(pageable);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @DeleteMapping(name = "delete_menu", path = "/delete")
     @Operation(summary = "Delete Menu",
             description = "The menu is delete using its id that is retrieved " +
@@ -57,6 +61,7 @@ public class MenuController {
                 .body(Map.of("message", "Menu deleted successfully"));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @PatchMapping(name = "update_menu", path = "/update")
     @Operation(summary = "Update Menu",
             description = "The menu can be updated partially, " +

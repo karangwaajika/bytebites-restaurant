@@ -28,6 +28,7 @@ public class RestaurantController {
         this.restaurantService = restaurantService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @PostMapping("/add")
     @Operation(summary = "Add restaurant",
             description = "This request inserts a restaurant to the database and returns " +
@@ -41,7 +42,7 @@ public class RestaurantController {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @GetMapping(name = "view_restaurants", path = "/view")
     @Operation(summary = "View restaurants",
             description = "This method applies pagination for efficient retrieval " +
@@ -53,6 +54,7 @@ public class RestaurantController {
         return this.restaurantService.findAll(pageable);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @DeleteMapping(name = "delete_restaurant", path = "/delete")
     @Operation(summary = "Delete Restaurant",
             description = "The restaurant is delete using its id that is retrieved " +
@@ -64,6 +66,7 @@ public class RestaurantController {
                 .body(Map.of("message", "Restaurant deleted successfully"));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @PatchMapping(name = "update_restaurant", path = "/update")
     @Operation(summary = "Update Restaurant",
             description = "The restaurant can be updated partially, " +
