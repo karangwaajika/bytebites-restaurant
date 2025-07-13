@@ -1,4 +1,4 @@
-package com.lab.restaurant_service.events;
+package com.lab.order_service.events;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

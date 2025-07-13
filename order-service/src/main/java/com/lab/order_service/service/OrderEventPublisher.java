@@ -11,7 +11,14 @@ public class OrderEventPublisher {
     private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     public void publishOrderPlacedEvent(OrderPlacedEvent event) {
-        kafkaTemplate.send("order.placed", event);
+        kafkaTemplate.send("order.placed", event)
+                .whenComplete((result, ex) -> {
+                    if (ex == null) {
+                        System.out.println("✅ Successfully sent event: " + event);
+                    } else {
+                        System.err.println("❌ Failed to send event: " + event + ". Reason: " + ex.getMessage());
+                        // Optionally: save to DB or retry queue
+                    }
+                });
     }
 }
-

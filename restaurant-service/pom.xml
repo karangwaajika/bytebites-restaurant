@@ -54,6 +54,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<!--		common-event outside project-->
+		<dependency>
+			<groupId>com.lab</groupId>
+			<artifactId>common-events</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 <!--		security-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

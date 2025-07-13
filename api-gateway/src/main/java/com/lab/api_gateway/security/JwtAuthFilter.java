@@ -20,12 +20,17 @@ public class JwtAuthFilter implements GlobalFilter{
     private static final List<String> PUBLIC_ENDPOINTS = List.of(
             "/login", "/register", "/restaurants/view",
             "/menu/view", "/oauth2/success", "", "/","/error",
-            "/logout"
+            "/logout", "/menu/view/"
     );
 
     // check if the path is public
     private boolean isPublicEndpoint(String path) {
-        return PUBLIC_ENDPOINTS.contains(path);
+        boolean isEmpty = PUBLIC_ENDPOINTS.stream()
+                .filter(path::startsWith)
+                .toList()
+                .isEmpty();
+
+        return !isEmpty;
     }
 
     @Override

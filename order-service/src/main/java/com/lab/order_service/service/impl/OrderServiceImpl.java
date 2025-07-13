@@ -30,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
         this.modelMapper = modelMapper;
         this.menuService = menuService;
+        this.orderEventPublisher =  orderEventPublisher;
     }
 
     @Override
