@@ -41,8 +41,6 @@ public class RestaurantController {
         return ResponseEntity.ok(savedUser);
     }
 
-
-    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @GetMapping(name = "view_restaurants", path = "/view")
     @Operation(summary = "View restaurants",
             description = "This method applies pagination for efficient retrieval " +

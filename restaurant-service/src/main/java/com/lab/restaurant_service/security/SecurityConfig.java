@@ -13,7 +13,8 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Method security will handle access
+                        .requestMatchers("/restaurants/view", "/menu/view").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(gatewayAuthFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
                 .build();

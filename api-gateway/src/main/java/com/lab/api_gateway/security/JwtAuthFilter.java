@@ -18,8 +18,9 @@ import java.util.List;
 public class JwtAuthFilter implements GlobalFilter{
     private final JwtUtil jwtUtil;
     private static final List<String> PUBLIC_ENDPOINTS = List.of(
-            "/login",
-            "/register"
+            "/login", "/register", "/restaurants/view",
+            "/menu/view", "/oauth2/success", "", "/","/error",
+            "/logout"
     );
 
     // check if the path is public
