@@ -22,7 +22,7 @@ import java.util.Map;
 @Controller
 public class BrowserController {
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal OAuth2User oAuth2User) {
         System.out.println(oAuth2User.getAttributes());
         model.addAttribute("user", oAuth2User.getAttribute("login"));

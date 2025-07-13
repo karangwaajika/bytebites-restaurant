@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api-order-service")
+@RequestMapping("order")
 public class OrderController {
     OrderService orderService;
 
@@ -23,7 +23,7 @@ public class OrderController {
     @Operation(summary = "Add order",
             description = "This request inserts a order to the database and returns " +
                           "the inserted order ")
-    public ResponseEntity<OrderResponseDto> registerUser(
+    public ResponseEntity<OrderResponseDto> placeOrder(
             @RequestBody OrderRequestDto orderRequestDto
     ) throws Exception {
         OrderResponseDto savedUser = this.orderService.order(orderRequestDto);

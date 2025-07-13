@@ -6,6 +6,7 @@ import com.lab.auth_service.model.UserEntity;
 import com.lab.auth_service.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,21 +40,13 @@ public class UserController {
         return this.userService.findAll(pageable);
     }
 
-    @GetMapping(name = "view_users", path = "/admin/users")
-    @Operation(summary = "View users",
-            description = "This method applies pagination for efficient retrieval " +
-                          "of users list")
-    public Page<UserResponseDto> adminOnlyViewUsers(Pageable pageable){
-        return this.userService.findAll(pageable);
-    }
-
-
     @GetMapping(name = "view_user", path = "/users/me")
     @Operation(summary = "View the current user",
             description = "This method retrieve the authenticated user who is currently " +
                           "in interaction with the site")
-    public ResponseEntity<UserResponseDto> viewCurrentUser(Authentication auth){
-        UserEntity user = this.userService.findByEmail(auth.getName()).get();
+    public ResponseEntity<UserResponseDto> viewCurrentUser(HttpServletRequest request){
+        String userEmail = request.getHeader("X-User-Email");
+        UserEntity user = this.userService.findByEmail(userEmail).get();
         return ResponseEntity.ok(modelMapper.map(user, UserResponseDto.class));
     }
 

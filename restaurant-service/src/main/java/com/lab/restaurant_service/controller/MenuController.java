@@ -40,7 +40,6 @@ public class MenuController {
         return ResponseEntity.ok(savedUser);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'RESTAURANT_OWNER')")
     @GetMapping(name = "view_menus", path = "/view")
     @Operation(summary = "View menus",
             description = "This method applies pagination for efficient retrieval " +

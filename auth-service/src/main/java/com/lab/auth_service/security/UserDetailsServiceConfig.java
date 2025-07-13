@@ -30,3 +30,13 @@ public class UserDetailsServiceConfig {
         };
     }
 }
+/*@Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return username -> {
+            Optional<UserEntity> user = userRepository.findByEmail(username);
+            if (user.isEmpty()) {
+                throw new UsernameNotFoundException("User not found");
+            }
+            return new UserPrincipal(user.get());
+        };
+    }*/

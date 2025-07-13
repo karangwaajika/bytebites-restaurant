@@ -12,7 +12,7 @@ public class MenuService {
     private final String authServiceUrl;
 
     public MenuService(RestTemplate restTemplate,
-                       @Value("${auth.service.url:http://localhost:8080/api-menu-service}") String authServiceUrl) {
+                       @Value("${auth.service.url:http://localhost:8080/api-restaurant-service/menu}") String authServiceUrl) {
         this.restTemplate = restTemplate;
         this.authServiceUrl = authServiceUrl;
     }

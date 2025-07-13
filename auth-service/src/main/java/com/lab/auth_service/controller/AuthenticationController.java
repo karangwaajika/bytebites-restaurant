@@ -59,8 +59,8 @@ public class AuthenticationController {
 
         this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(), authenticationRequest.getPassword()));
-
         final UserEntity userDetails = this.userService.findByEmail(authenticationRequest.getEmail()).get();
+        System.out.println("Generating token for: " + userDetails.getEmail());
         final String jwt = this.jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));

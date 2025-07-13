@@ -54,6 +54,17 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<!--		common-events project-->
+		<dependency>
+			<groupId>com.lab</groupId>
+			<artifactId>common-events</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+<!--		even driven using kafta-->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
 
 		<!-- Lombok -->
 		<dependency>
