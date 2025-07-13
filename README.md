@@ -116,11 +116,4 @@ cd auth-service && mvn spring-boot:run
 cd restaurant-service && mvn spring-boot:run
 cd order-service && mvn spring-boot:run
 cd notification-service && mvn spring-boot:run
-
-
-## Expected Learning Outcomes
-
-- Solidify understanding of Java concurrency primitives and memory consistency
-- Develop real-world concurrency patterns (producer-consumer, thread pools)
-- Detect and fix synchronization issues and race conditions
-- Build and test a robust multithreaded system with real-time status tracking
+```
