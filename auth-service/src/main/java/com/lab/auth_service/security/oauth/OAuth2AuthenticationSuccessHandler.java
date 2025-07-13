@@ -1,6 +1,7 @@
 package com.lab.auth_service.security.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lab.auth_service.model.UserEntity;
 import com.lab.auth_service.repository.UserRepository;
 import com.lab.auth_service.security.jwt.JwtUtil;
 import com.lab.auth_service.util.Role;
@@ -70,7 +71,8 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
                 "",                      // password not needed for token creation
                 List.of(new SimpleGrantedAuthority("ROLE_" + role.name()))
         );
-        String token = jwtUtil.generateToken(userDetails);
+        UserEntity userEntity = userRepository.findByEmail(email).get();
+        String token = jwtUtil.generateToken(userEntity);
 
         // Redirect with token in URL
          //res.sendRedirect("/#/oauth-success?token=" + token);

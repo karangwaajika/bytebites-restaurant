@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/auth")
 @Tag(name = "Authentication Controller",
         description = "Manage all the Authentication 's urls")
 public class AuthenticationController {
@@ -61,7 +60,7 @@ public class AuthenticationController {
         this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
-        final UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        final UserEntity userDetails = this.userService.findByEmail(authenticationRequest.getEmail()).get();
         final String jwt = this.jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
