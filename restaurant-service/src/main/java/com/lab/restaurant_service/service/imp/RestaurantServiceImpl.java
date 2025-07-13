@@ -17,6 +17,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -34,6 +37,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantResponseDto create(RestaurantRequestDto restaurantDto) throws Exception {
+        log.info("Create a restaurant");
         if(findByName(restaurantDto.getName()).isPresent()){
             throw new RestaurantExistsException(
                     String.format("A restaurant with the name '%s' already exist",
@@ -63,22 +67,26 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Optional<RestaurantEntity> findByName(String name) {
+        log.info("Find a restaurant by name");
         return this.restaurantRepository.findByName(name);
     }
 
     @Override
     public Optional<RestaurantEntity> findById(Long id) {
+        log.info("Find a restaurant by Id");
         return this.restaurantRepository.findById(id);
     }
 
     @Override
     public Page<RestaurantResponseDto> findAll(Pageable pageable) {
+        log.info("Fetch all restaurants");
         Page<RestaurantEntity> restaurants = this.restaurantRepository.findAll(pageable);
         return restaurants.map(restaurant->this.modelMapper.map(restaurant, RestaurantResponseDto.class));
     }
 
     @Override
     public RestaurantResponseDto partialUpdate(RestaurantRequestDto restaurantRequestDto, Long restaurantId) {
+        log.info("update restaurant partially");
         RestaurantEntity restaurantEntity = findById(restaurantId)
                 .orElseThrow(() -> new RestaurantNotFoundException(
                         String.format("A restaurant with the Id '%d' doesn't exist", restaurantId)));
@@ -100,6 +108,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void deleteById(Long id) {
+        log.info("Delete a restaurant");
         if(findById(id).isEmpty()){
             throw new RestaurantNotFoundException(
                     String.format("A restaurant with the Id '%d' doesn't exist", id));
